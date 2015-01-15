@@ -1,0 +1,10 @@
+<resources>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+    </style>
+    
+    <style name="ChatTheme" parent="android:Theme.Holo">
+	    <item name="android:windowActionBarOverlay">true</item>
+    </style>
+</resources>
