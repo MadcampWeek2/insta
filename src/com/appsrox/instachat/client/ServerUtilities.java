@@ -45,7 +45,7 @@ public final class ServerUtilities {
      */
     public static void register(final String email, final String regId) {
         //Log.i(TAG, "registering device (regId = " + regId + ")");
-        String serverUrl = Common.getServerUrl() + "/register";
+        String serverUrl = Common.getServerUrl() + "/?register=1";
         Map<String, String> params = new HashMap<String, String>();
         params.put(Common.FROM, email);
         params.put(Common.REG_ID, regId);
@@ -62,8 +62,7 @@ public final class ServerUtilities {
      * Unregister this account/device pair within the server.
      */
     public static void unregister(final String email) {
-        //Log.i(TAG, "unregistering device (email = " + email + ")");
-        String serverUrl = Common.getServerUrl() + "/unregister";
+        String serverUrl = Common.getServerUrl() + "/?unregister=1";
         Map<String, String> params = new HashMap<String, String>();
         params.put(Common.FROM, email);
         try {
@@ -82,7 +81,7 @@ public final class ServerUtilities {
      */
     public static void send(String msg, String to) throws IOException {
         //Log.i(TAG, "sending message (msg = " + msg + ")");
-        String serverUrl = Common.getServerUrl() + "/send";
+        String serverUrl = Common.getServerUrl() + "/?send=1";
         Map<String, String> params = new HashMap<String, String>();
         params.put(Common.MSG, msg);
         params.put(Common.FROM, Common.getPreferredEmail());
@@ -147,12 +146,10 @@ public final class ServerUtilities {
     private static void post(String endpoint, Map<String, String> params, int maxAttempts) throws IOException {
     	long backoff = BACKOFF_MILLI_SECONDS + random.nextInt(1000);
     	for (int i = 1; i <= maxAttempts; i++) {
-    		//Log.d(TAG, "Attempt #" + i);
     		try {
     			post(endpoint, params);
     			return;
     		} catch (IOException e) {
-    			//Log.e(TAG, "Failed on attempt " + i + ":" + e);
     			if (i == maxAttempts) {
     				throw e;
                 }

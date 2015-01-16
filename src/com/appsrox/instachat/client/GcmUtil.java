@@ -48,6 +48,7 @@ public class GcmUtil {
         	broadcastStatus(true);
         }
 		gcm = GoogleCloudMessaging.getInstance(ctx);		
+		Log.i("RegId", regid);
 	}
 	
 	/**

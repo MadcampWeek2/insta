@@ -41,7 +41,7 @@ public class MainActivity extends ListActivity implements LoaderManager.LoaderCa
 				case R.id.text2:
 					int count = cursor.getInt(columnIndex);
 					if (count > 0) {
-						((TextView)view).setText(String.format("%d new message%s", count, count==1 ? "" : "s"));
+						((TextView)view).setText(String.format("%d개의 새로운 메세지%s", count, count==1 ? "" : "들"));
 					}
 					return true;					
 				}
@@ -53,7 +53,8 @@ public class MainActivity extends ListActivity implements LoaderManager.LoaderCa
 		
 		/* ActionBar set up */
 		ActionBar actionBar = getActionBar();
-		actionBar.setDisplayShowTitleEnabled(false); // Don't show the title of the action bar
+		actionBar.setTitle("친구");
+//		actionBar.setDisplayShowTitleEnabled(false); // Don't show the title of the action bar
 		
 /*		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 		
@@ -101,8 +102,9 @@ public class MainActivity extends ListActivity implements LoaderManager.LoaderCa
 		startActivity(intent);
 	}	
 	
-	//----------------------------------------------------------------------------
-
+	/**
+	 * LoaderCallbacks<Cursor> interface implementation 
+	 */
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 		CursorLoader loader = new CursorLoader(this, 
@@ -123,5 +125,4 @@ public class MainActivity extends ListActivity implements LoaderManager.LoaderCa
 	public void onLoaderReset(Loader<Cursor> loader) {
 		adapter.swapCursor(null);
 	}	
-
 }

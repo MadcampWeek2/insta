@@ -55,8 +55,7 @@
         </activity>
         <activity
             android:name=".ChatActivity"
-            android:logo="@drawable/ic_contact_picture"
-            android:theme="@style/ChatTheme" >
+            android:logo="@drawable/ic_contact_picture" >
         </activity>
     </application>
 
