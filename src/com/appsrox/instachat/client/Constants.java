@@ -9,10 +9,10 @@ public interface Constants {
     /**
      * Base URL of the Demo Server (such as http://my_host:8080/gcm-demo)
      */
-	String SERVER_URL = "http://ingenui.iptime.org/gcm.php";
+	String SERVER_URL = "http://makaotalknew.appspot.com";
 
     /**
      * Google API project id registered to use GCM.
      */
-	String SENDER_ID = "352935819908";
+	String SENDER_ID = "549099981295";
 }

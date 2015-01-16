@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,14 +40,17 @@ public class ChatActivity extends Activity implements MessagesFragment.OnFragmen
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chat);
 		
+		/* VIEWs */
 		profileId = getIntent().getStringExtra(Common.PROFILE_ID);
 		msgEdit = (EditText) findViewById(R.id.msg_edit);
 		sendBtn = (Button) findViewById(R.id.send_btn);
 		
+		/* ActionBar setup */
 		ActionBar actionBar = getActionBar();
 		actionBar.setHomeButtonEnabled(true);
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		
+		/* DB */
 		Cursor c = getContentResolver().query(Uri.withAppendedPath(DataProvider.CONTENT_URI_PROFILE, profileId), null, null, null, null);
 		if (c.moveToFirst()) {
 			profileName = c.getString(c.getColumnIndex(DataProvider.COL_NAME));
@@ -55,13 +59,14 @@ public class ChatActivity extends Activity implements MessagesFragment.OnFragmen
 		}
 		actionBar.setSubtitle("connecting ...");
 		
+		/* Broadcast Receiver. Registration Status. */
 		registerReceiver(registrationStatusReceiver, new IntentFilter(Common.ACTION_REGISTER));
 		gcmUtil = new GcmUtil(getApplicationContext());
 	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
+		/* ActionBar actions */
 		getMenuInflater().inflate(R.menu.chat, menu);
 		return true;
 	}	
@@ -69,6 +74,7 @@ public class ChatActivity extends Activity implements MessagesFragment.OnFragmen
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+		/* Edit action */
 		case R.id.action_edit:
 			EditContactDialog dialog = new EditContactDialog();
 			Bundle args = new Bundle();
@@ -77,7 +83,7 @@ public class ChatActivity extends Activity implements MessagesFragment.OnFragmen
 			dialog.setArguments(args);
 			dialog.show(getFragmentManager(), "EditContactDialog");
 			return true;
-			
+		/* Home Button */
 		case android.R.id.home:
 			Intent intent = new Intent(this, MainActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -113,7 +119,7 @@ public class ChatActivity extends Activity implements MessagesFragment.OnFragmen
                 String msg = "";
                 try {
                     ServerUtilities.send(txt, profileEmail);
-                    
+                    Log.i("AAA", "SENT!");
         			ContentValues values = new ContentValues(2);
         			values.put(DataProvider.COL_MSG, txt);
         			values.put(DataProvider.COL_TO, profileEmail);
@@ -151,7 +157,7 @@ public class ChatActivity extends Activity implements MessagesFragment.OnFragmen
 	
 	//--------------------------------------------------------------------------------
 	
-	private BroadcastReceiver registrationStatusReceiver = new  BroadcastReceiver() {
+	private BroadcastReceiver registrationStatusReceiver = new BroadcastReceiver() {
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
